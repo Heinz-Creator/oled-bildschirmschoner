@@ -1,0 +1,8 @@
+/** Bounded visual-only particles: no network, services or flash effects. */
+export function startAmbientParticles(canvas,effect,{reduced=false,hidden=()=>document.hidden}={}){
+ if(!canvas||reduced||effect==='none')return ()=>{};
+ const ctx=canvas.getContext('2d');if(!ctx)return ()=>{};let raf=0,last=0,stopped=false,w=1,h=1,particles=[];
+ const resize=()=>{w=Math.max(1,canvas.clientWidth);h=Math.max(1,canvas.clientHeight);canvas.width=w;canvas.height=h;particles=Array.from({length:effect==='rain'?65:effect==='wind'?12:32},()=>({x:Math.random()*w,y:Math.random()*h,s:Math.random()*2+1,v:Math.random()*30+20,a:Math.random()*6.28}));};
+ resize();const observer=new ResizeObserver(resize);observer.observe(canvas);
+ const draw=now=>{if(stopped)return;raf=requestAnimationFrame(draw);if(hidden()){last=now;return;}if(now-last<33)return;const dt=Math.min((now-last)/1000,.06);last=now;ctx.clearRect(0,0,w,h);for(const p of particles){p.a+=dt;p.x+=(effect==='snow'?Math.sin(p.a)*12:effect==='rain'?-100:40)*dt;p.y+=(effect==='rain'?p.v*10:effect==='wind'?2:p.v*.7)*dt;if(p.y>h+25){p.y=-25;p.x=Math.random()*w;}if(p.x>w+30)p.x=-30;if(p.x< -30)p.x=w+30;ctx.beginPath();if(effect==='rain'){ctx.strokeStyle='#a6ceff55';ctx.lineWidth=.8;ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-4,p.y+19);ctx.stroke();}else if(effect==='wind'){ctx.strokeStyle='#def0ff25';ctx.moveTo(p.x,p.y);ctx.quadraticCurveTo(p.x+45,p.y-12,p.x+90,p.y);ctx.stroke();}else{ctx.fillStyle=effect==='leaves'?'#ee853779':'#f3f7ff99';ctx.ellipse(p.x,p.y,p.s*(effect==='leaves'?3:1),p.s, p.a,0,Math.PI*2);ctx.fill();}}};raf=requestAnimationFrame(draw);return ()=>{stopped=true;cancelAnimationFrame(raf);observer.disconnect();ctx.clearRect(0,0,w,h);};
+}
