@@ -36,6 +36,14 @@ Optional kannst du Hausverbrauch, PV-Leistung, gefühlte Temperatur, Kalender un
 
 **Gerät ohne Programmstatus.** Eine für das Gerät geeignete Steckdose mit Leistungsmessung kann den Programmablauf erkennen. Die Automation liest nur den Sensor in **Watt** und ändert einen Status-Helfer.
 
+1. Öffne im Karteneditor **Gerätemeldungen → Waschmaschine oder Geschirrspüler über Steckdose einrichten**. Wähle das Gerät und den Leistungssensor der Steckdose in Watt.
+2. Prüfe bei Bedarf **Schwellen und Wartezeiten**. Voreinstellung für die Waschmaschine ist über 25 W für 2 Minuten beim Start und unter 15 W für 15 Minuten beim Ende. Beim Geschirrspüler sind es über 10 W für 1 Minute und unter 5 W für 10 Minuten. Passe die Wartezeiten an die Programmpausen deines Geräts an.
+3. Klicke als Home-Assistant-Administrator auf **Automation hinzufügen** und speichere die Karte. Die Karte legt den Status-Helfer und die Automation an und trägt die Fertigmeldung ein.
+
+Der Helfer hat die Zustände `Bereit`, `Läuft` und `Fertig`. Für eine Durchsage oder andere Folgeaktion kannst du in einer eigenen Automation den Wechsel auf `Fertig` als Auslöser verwenden. Die Entität steht nach der Einrichtung im Karteneditor. Ein Neustart unterbricht laufende Wartezeiten.
+
+### Manuell über den Blueprint
+
 1. Lege unter **Einstellungen → Geräte & Dienste → Helfer** einen **Auswahl-Helfer** mit den Optionen `Bereit`, `Läuft` und `Fertig` an. Lege pro Gerät einen eigenen Helfer an.
 2. [Automation als Blueprint öffnen](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FHeinz-Creator%2Foled-bildschirmschoner%2Fblob%2Fmain%2Fblueprints%2Fgeraet-fertig.yaml). Sobald das Repository öffentlich ist, kannst du den Blueprint importieren und daraus eine Automation erstellen. Wähle den Leistungssensor und den Status-Helfer aus.
 3. Im Karteneditor unter **Gerätemeldungen** den Helfer auswählen und als Zustand `Fertig` eintragen. Gib der Anzeige einen Namen wie „Waschmaschine fertig“.
