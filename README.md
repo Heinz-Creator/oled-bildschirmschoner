@@ -4,17 +4,16 @@ Ein Bildschirmschoner fürs Wandtablet. Er zeigt Uhrzeit, Wetter und den aktuell
 
 ![Bildschirmschoner auf einem Wandtablet mit Beispieldaten](preview.jpg)
 
-## Installation über HACS
+## Installation über Marketplace oder HACS
 
 [![In HACS öffnen](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Heinz-Creator&repository=oled-bildschirmschoner&category=plugin)
 
-Der Button funktioniert, sobald das Repository öffentlich ist.
+1. Öffne **Einstellungen → Marketplace → Über Link hinzufügen** und füge `https://github.com/Heinz-Creator/oled-bildschirmschoner` ein. Verbinde bei Bedarf dein GitHub-Konto. Wenn du HACS verwendest, öffne den Button oben oder füge den Link in **Benutzerdefinierte Repositorys** als **Dashboard** hinzu.
+2. Wähle **Installieren** im Marketplace oder **Herunterladen** in HACS. Beide laden das Modul und die mitgelieferten Motive. Bei Dashboard-Ressourcen im YAML-Modus übernimm die Modul-URL aus dem Installationsdialog.
+3. Lade Home Assistant im Browser neu und füge die Karte **OLED Bildschirmschoner** zu deinem Tablet-Dashboard hinzu.
+4. Öffne am Wandtablet **Bildschirmschoner einstellen** und aktiviere **Auf diesem Display automatisch starten**.
 
-1. Öffne den Button oben und wähle in HACS **Herunterladen**.
-2. Lade Home Assistant im Browser neu. Öffne dein Tablet-Dashboard und füge die Karte **OLED Bildschirmschoner** hinzu.
-3. Öffne den Karteneditor am Wandtablet, wähle **Bildschirmschoner einstellen** und aktiviere **Auf diesem Display automatisch starten**.
-
-Du kannst das Repository auch über **HACS → Drei-Punkte-Menü → Benutzerdefinierte Repositories** hinzufügen. Die Kategorie lautet **Dashboard**. [HACS-Dokumentation](https://www.hacs.xyz/docs/faq/custom_repositories/)
+[Marketplace-Dokumentation](https://contributors.home-assistant.io/marketplace/guides/dashboard/) · [HACS-Dokumentation](https://www.hacs.dev/docs/faq/custom_repositories/)
 
 ## Manuelle Installation
 
@@ -29,6 +28,14 @@ Füge **OLED Bildschirmschoner** auf der Dashboard-Seite hinzu, die auf dem Wand
 Licht, Rollos, Wiedergabe und Wetter werden nach Möglichkeit automatisch aus Home Assistant übernommen. Im Karteneditor kannst du die Auswahl einschränken oder weitere Quellen zuordnen. Für Rollos berücksichtigt die automatische Auswahl die Geräteklassen Rollo, Jalousie, Vorhang und Beschattung. Medientitel erscheinen, wenn die Geräteintegration einen Titel oder Sender liefert.
 
 Optional kannst du Hausverbrauch, PV-Leistung, gefühlte Temperatur, Kalender und eine Nachrichten-Entität wählen. Die Nachrichtenquelle ist ein Sensor, der den Titel als Zustand oder im Attribut `title` liefert. Kalenderdaten kommen aus dem gewählten Home-Assistant-Kalender. Eigene Fotos werden im Home Assistant des jeweiligen Nutzers gespeichert. Die Karte zeigt Zustände an und steuert keine Geräte.
+
+## Feiertage und eigene Fotos
+
+Der Bildschirmschoner wählt passende Motive nach Datum und Ortszeit in Home Assistant. So wechselt die gewählte Motivwelt etwa ab dem ersten Advent, rund um Ostern oder zu Silvester. Im Einstellungsdialog kannst du einzelne Anlässe ausschalten. Im gemischten Modus wechseln sich eigene Fotos und automatische Motive ab. Im Fotomodus erscheint dein Album, sobald es Bilder enthält.
+
+| Advent & Weihnachten | Ostern | Silvester & Neujahr |
+| --- | --- | --- |
+| ![Weihnachtsmotiv aus Baum & Jahreszeiten](dist/christmas-evening.webp) | ![Ostermotiv aus der Minecraft-Welt](dist/minecraft-easter-morning.webp) | ![Silvestermotiv aus der Lichtküste](dist/coast-newyear-evening.webp) |
 
 ## Waschmaschine oder Geschirrspüler fertig
 
@@ -45,7 +52,7 @@ Der Helfer hat die Zustände `Bereit`, `Läuft` und `Fertig`. Für eine Durchsag
 ### Manuell über den Blueprint
 
 1. Lege unter **Einstellungen → Geräte & Dienste → Helfer** einen **Auswahl-Helfer** mit den Optionen `Bereit`, `Läuft` und `Fertig` an. Lege pro Gerät einen eigenen Helfer an.
-2. [Automation als Blueprint öffnen](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FHeinz-Creator%2Foled-bildschirmschoner%2Fblob%2Fmain%2Fblueprints%2Fgeraet-fertig.yaml). Sobald das Repository öffentlich ist, kannst du den Blueprint importieren und daraus eine Automation erstellen. Wähle den Leistungssensor und den Status-Helfer aus.
+2. Importiere den Blueprint und erstelle daraus eine Automation. Wähle den Leistungssensor und den Status-Helfer aus. [Automation als Blueprint öffnen](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FHeinz-Creator%2Foled-bildschirmschoner%2Fblob%2Fmain%2Fblueprints%2Fgeraet-fertig.yaml)
 3. Im Karteneditor unter **Gerätemeldungen** den Helfer auswählen und als Zustand `Fertig` eintragen. Gib der Anzeige einen Namen wie „Waschmaschine fertig“.
 
 Die Beispielwerte liegen bei über 15 W für zwei Minuten für den Start und unter 3 W für zehn Minuten für das Ende. Passe sie nach einem beobachteten Lauf an dein Gerät an. Die Meldung erscheint erst nach einem erkannten Lauf und wechselt beim nächsten erkannten Start zurück. Ein Neustart unterbricht laufende Wartezeiten. Die Auswertung setzt beim nächsten Schwellenwechsel wieder ein. [Blueprint-Datei](blueprints/geraet-fertig.yaml) · [Home-Assistant-Auslöser](https://www.home-assistant.io/triggers/numeric_state/)
@@ -82,6 +89,8 @@ npm test
 npm run build
 ```
 
-GitHub Actions prüft die HACS-Struktur, sobald das Repository öffentlich ist. Nach einem grünen Lauf ein GitHub-Release erstellen. Für die Aufnahme in die normale HACS-Suche muss der Repo-Eintrag anschließend in `hacs/default` unter `plugin` eingereicht und angenommen werden. [HACS-Aufnahme](https://www.hacs.xyz/docs/publish/include/)
+Für neue Motive ergänze die WebP-Dateien in `dist/`. Neue Feiertage brauchen außerdem einen Kalendereintrag in `src/ambient-calendar.js` und für jede Motivwelt eine Morgen- und eine Abenddatei. Ersetzte Bilder können ihre bisherigen Dateinamen behalten.
+
+Führe danach die Tests und den Build aus. Veröffentliche für ein Update einen neuen GitHub-Release mit einer höheren Versionsnummer. Der Tag muss das vollständige `dist/` mit JavaScript und Motiven enthalten. HACS und der Marketplace beziehen das Paket aus dem getaggten Stand. Wenn du Dateien als Release-Assets anhängst, hänge das Modul und alle benötigten Bilder gemeinsam an. [Marketplace-Dokumentation zur Paketstruktur](https://contributors.home-assistant.io/marketplace/guides/dashboard/#name-your-file-after-your-repository)
 
 Die mitgelieferten Motivwelten sind eigens für das Projekt erstellte Illustrationen. Minecraft-Welt ist ein inoffizielles Motiv im Blockstil.
