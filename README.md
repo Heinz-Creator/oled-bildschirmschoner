@@ -12,7 +12,7 @@ Der Button funktioniert, sobald das Repository öffentlich ist.
 
 1. Öffne den Button oben und wähle in HACS **Herunterladen**.
 2. Lade Home Assistant im Browser neu. Öffne dein Tablet-Dashboard und füge die Karte **OLED Bildschirmschoner** hinzu.
-3. Wähle **Bildschirmschoner einstellen** und aktiviere **Auf diesem Display automatisch starten**.
+3. Öffne den Karteneditor am Wandtablet, wähle **Bildschirmschoner einstellen** und aktiviere **Auf diesem Display automatisch starten**.
 
 Du kannst das Repository auch über **HACS → Drei-Punkte-Menü → Benutzerdefinierte Repositories** hinzufügen. Die Kategorie lautet **Dashboard**. [HACS-Dokumentation](https://www.hacs.xyz/docs/faq/custom_repositories/)
 
@@ -24,7 +24,7 @@ Du kannst das Repository auch über **HACS → Drei-Punkte-Menü → Benutzerdef
 
 ## Auf dem Tablet einrichten
 
-Füge die Karte **OLED Bildschirmschoner** auf dem Dashboard hinzu, das auf dem Wandtablet geöffnet bleibt. **Jetzt ansehen** öffnet die Vorschau. Unter **Bildschirmschoner einstellen** wählst du eine Motivwelt und aktivierst **Auf diesem Display automatisch starten**. Die Ruhezeit wird für diesen Browser gespeichert. Tippen oder Escape schließt den Bildschirmschoner. Das Tablet muss das Dashboard geöffnet und das Display eingeschaltet haben.
+Füge **OLED Bildschirmschoner** auf der Dashboard-Seite hinzu, die auf dem Wandtablet geöffnet bleibt. Die Karte ist im Bearbeitungsmodus sichtbar und läuft im normalen Dashboard im Hintergrund. Öffne am Tablet **Dashboard bearbeiten → OLED Bildschirmschoner → Bearbeiten → Bildschirmschoner einstellen**. Wähle eine Motivwelt und aktiviere **Auf diesem Display automatisch starten**. Die Ruhezeit wird für diesen Browser gespeichert. Wenn du die Schaltfläche **Jetzt ansehen** im normalen Dashboard möchtest, aktiviere im Karteneditor **Karte im Dashboard anzeigen**. Tippen oder Escape schließt den Bildschirmschoner. Das Tablet muss das Dashboard geöffnet und das Display eingeschaltet haben.
 
 Licht, Rollos, Wiedergabe und Wetter werden nach Möglichkeit automatisch aus Home Assistant übernommen. Im Karteneditor kannst du die Auswahl einschränken oder weitere Quellen zuordnen. Für Rollos berücksichtigt die automatische Auswahl die Geräteklassen Rollo, Jalousie, Vorhang und Beschattung. Medientitel erscheinen, wenn die Geräteintegration einen Titel oder Sender liefert.
 
