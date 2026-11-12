@@ -2,15 +2,19 @@ import { LitElement, css, html } from 'lit';
 import './oled-ambient.js';
 import './editor.js';
 import { projectHouse } from './house-status.js';
+import { readAmbientDevice } from './ambient-data.js';
 
 class OledBildschirmschoner extends LitElement {
   static properties = {
     hass:{attribute:false},
     config:{state:true},
     events:{state:true},
+    preview:{type:Boolean},
+    editMode:{type:Boolean},
   };
 
   static styles = css`
+    :host([hidden]) {display:none}
     ha-card {padding:20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
     .copy {flex:1;min-width:180px}
     h2 {font-size:1.12rem;margin:0 0 4px;color:var(--primary-text-color)}
@@ -28,25 +32,59 @@ class OledBildschirmschoner extends LitElement {
   #calendarVersion = 0;
   #refreshAfter = 0;
   #timer;
+  #ambient;
 
   constructor() { super(); this.events = []; }
   setConfig(config) { this.config = {...config}; }
-  getCardSize() { return 2; }
+  get connectedWhileHidden() { return true; }
+  getCardSize() { return this.hidden ? 0 : 2; }
 
   connectedCallback() {
     super.connectedCallback();
     this.#timer = setInterval(() => void this.#refreshCalendar(),60_000);
+    this.requestUpdate();
   }
 
   disconnectedCallback() {
     clearInterval(this.#timer);
     this.#calendarVersion++;
     this.#refreshAfter = 0;
+    this.#ambient?.remove();
+    this.#ambient = undefined;
     super.disconnectedCallback();
   }
 
   updated(changed) {
     if (changed.has('hass') || changed.has('config')) void this.#refreshCalendar();
+    const editing = this.preview || this.editMode;
+    const hidden = !editing && this.config?.show_controls !== true;
+    if (this.hidden !== hidden) {
+      this.hidden = hidden;
+      this.dispatchEvent(new CustomEvent('card-visibility-changed', {detail:{value:!hidden}}));
+    }
+    if (!this.isConnected || !this.hass?.states || !this.config) return;
+
+    const ambient = this.#ambient ??= document.createElement('oled-public-ambient');
+    const data = projectHouse(this.hass,this.config);
+    Object.assign(ambient, {
+      hass:this.hass,
+      blocked:Boolean(editing),
+      activities:data.rows,
+      weather:data.weather,
+      temperature:data.temperature,
+      temperatureLabel:data.temperatureLabel,
+      power:data.power,
+      events:this.events,
+      news:data.news,
+    });
+    if (!ambient.isConnected) {
+      // Keep modal dialogs outside the hidden Lovelace card and its grid wrapper.
+      document.body.append(ambient);
+    } else if (!editing && (changed.has('preview') || changed.has('editMode'))) {
+      let storage;
+      try { storage = window.localStorage; } catch {}
+      ambient.prefs = readAmbientDevice(storage);
+    }
   }
 
   async #refreshCalendar() {
@@ -73,19 +111,13 @@ class OledBildschirmschoner extends LitElement {
     }
   }
 
-  get #ambient() { return this.renderRoot.querySelector('oled-public-ambient'); }
-
   render() {
-    if (!this.hass?.states || !this.config) return html``;
-    const data = projectHouse(this.hass,this.config);
+    if (!this.hass?.states || !this.config || (!this.preview && !this.editMode && this.config.show_controls !== true)) return html``;
     return html`
       <ha-card>
         <div class="copy"><h2>OLED Bildschirmschoner</h2><p>Motivwelten, Uhrzeit und aktueller Hausstatus</p></div>
-        <button type="button" @click=${() => this.#ambient.start()}>Jetzt ansehen</button>
-        <button type="button" @click=${() => { this.#ambient.settingsOpen = true; }}>Bildschirmschoner einstellen</button>
-        <oled-public-ambient .hass=${this.hass} .activities=${data.rows} .weather=${data.weather}
-          .temperature=${data.temperature} .temperatureLabel=${data.temperatureLabel} .power=${data.power}
-          .events=${this.events} .news=${data.news}></oled-public-ambient>
+        <button type="button" @click=${() => this.#ambient?.start()}>Jetzt ansehen</button>
+        <button type="button" @click=${() => { if (this.#ambient) this.#ambient.settingsOpen = true; }}>Bildschirmschoner einstellen</button>
       </ha-card>
     `;
   }

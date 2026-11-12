@@ -10,7 +10,7 @@ const pickers = [
 ];
 
 class OledBildschirmschonerEditor extends LitElement {
-  static properties = {hass:{attribute:false},config:{state:true}};
+  static properties = {hass:{attribute:false},config:{state:true},settingsOpen:{state:true}};
   static styles = css`
     :host {display:grid;gap:12px;color:var(--primary-text-color)}
     fieldset {border:1px solid var(--divider-color);border-radius:10px;padding:12px;min-width:0}
@@ -88,6 +88,13 @@ class OledBildschirmschonerEditor extends LitElement {
     if (!this.hass || !this.config) return html``;
     const rules = Array.isArray(this.config.appliances) ? this.config.appliances : [];
     return html`
+      <fieldset><legend>Anzeige</legend>
+        <button type="button" @click=${() => { this.settingsOpen = true; }}>Bildschirmschoner einstellen</button>
+        <label class="check"><input type="checkbox" .checked=${this.config.show_controls === true}
+          @change=${event => this.#change('show_controls',event.target.checked || undefined)}> Karte im Dashboard anzeigen</label>
+        ${this.settingsOpen ? html`<oled-public-ambient .hass=${this.hass} .blocked=${true} .settingsOpen=${true}
+          @ambient-settings-close=${() => { this.settingsOpen = false; }}></oled-public-ambient>` : ''}
+      </fieldset>
       ${this.#list('lights','Lichter','light')}
       ${this.#list('covers','Rollos','cover')}
       ${this.#list('players','Mediaplayer','media_player')}
@@ -97,6 +104,8 @@ class OledBildschirmschonerEditor extends LitElement {
       </fieldset>
       <fieldset><legend>Gerätemeldungen</legend>
         <p>Eine Meldung erscheint, solange die gewählte Entität den eingetragenen Zustand hat.</p>
+        <p><a href="https://github.com/Heinz-Creator/oled-bildschirmschoner#waschmaschine-oder-geschirrsp%C3%BCler-fertig"
+          target="_blank" rel="noopener">Anleitung für Waschmaschine und Geschirrspüler</a></p>
         ${rules.map((rule,index) => html`<fieldset>
           ${this.#picker('Entität',null,rule.entity,value => this.#updateRule(index,'entity',value))}
           <label>Zustand, z. B. on oder finished<input .value=${rule.state || ''} @change=${e => this.#updateRule(index,'state',e.target.value)}></label>
