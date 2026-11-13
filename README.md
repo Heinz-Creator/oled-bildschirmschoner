@@ -4,6 +4,8 @@ Ein Bildschirmschoner fürs Wandtablet. Er zeigt Uhrzeit, Wetter und den aktuell
 
 ![Bildschirmschoner auf einem Wandtablet mit Beispieldaten](preview.jpg)
 
+[Bildschirmschoner im Einsatz – YouTube-Short ansehen](https://www.youtube.com/shorts/OaAi-cG6acw)
+
 ## Installation über Marketplace oder HACS
 
 [![In HACS öffnen](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Heinz-Creator&repository=oled-bildschirmschoner&category=plugin)
