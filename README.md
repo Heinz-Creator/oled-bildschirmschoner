@@ -39,6 +39,7 @@ Optional kannst du Hausverbrauch, PV-Leistung, gefühlte Temperatur, Kalender un
 - Bei **Home-Assistant-Standard** oder wenn eine gespeicherte Zuordnung wegfällt, gilt der bevorzugte Assist-Assistent. Mit nur einem eingerichteten Assistenten verwenden alle Figuren dieselbe Stimme.
 - Richte Assist unter **Einstellungen → Sprachassistenten** ein. Für Mikrofoneingaben braucht der Browser in der Regel HTTPS und Mikrofonzugriff. Ohne Sprachausgabe bleiben Antworten im Chat sichtbar.
 - **MP3-Hörprobe abspielen** spielt die kurze, mit eSpeak NG erzeugte Begrüßung der gewählten Figur ab. Die drei Hörproben sind im Paket enthalten. Neue Antworten erzeugt Home Assistant mit dem gewählten Assist-Assistenten.
+- Der Chat zeigt Überschriften, Absätze und Listen formatiert. Aktiviere **Rezeptfotos von Wikimedia Commons** für Fotos zu unterstützten Gerichten wie Käsekuchen, Apfelstrudel oder Lasagne. Die Suche sendet nur den Gerichtsnamen, etwa „Käsekuchen“, an Wikimedia. Bei einem Treffer erscheinen Foto, Urheber und Lizenz im Chat. Das Rezept ist sofort lesbar.
 
 ## Feiertage und eigene Fotos
 
