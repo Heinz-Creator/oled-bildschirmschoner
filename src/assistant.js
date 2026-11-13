@@ -8,6 +8,8 @@ import bertaAudio from '../dist/assist-berta.mp3';
 import hectorAudio from '../dist/assist-hector.mp3';
 import { Portrait, drawDial, reducedMotion } from './assistant-portrait.js';
 import { beginAssistRun } from './assist-pipeline.js';
+import { renderAssistantAnswer } from './assistant-chat.js';
+import { loadRecipePhoto, recipePhotoSubject } from './assistant-images.js';
 
 const figures = {
   edgar: { image:edgarImage, sample:edgarAudio, name:'Edgar', eyes:[
@@ -18,7 +20,7 @@ const figures = {
   ], mouth:{x:.521,y:.621,rx:.091} },
   hector: { image:hectorImage, sample:hectorAudio, name:'Haunting-Hector', mechanical:true, eyes:[], mouth:{x:.50,y:.591,rx:.10} },
 };
-const defaultSettings = { enabled:false, figure:'edgar', pipelines:{} };
+const defaultSettings = { enabled:false, figure:'edgar', pipelines:{}, recipePhotos:false };
 const storageKey = 'oled_bildschirmschoner_assist_v1';
 const storage = () => globalThis.localStorage;
 
@@ -29,6 +31,7 @@ function readSettings() {
       enabled: saved?.enabled === true,
       figure: Object.hasOwn(figures,saved?.figure) ? saved.figure : 'edgar',
       pipelines: saved?.pipelines ?? {},
+      recipePhotos: saved?.recipePhotos === true,
     };
   } catch { return defaultSettings; }
 }
@@ -45,8 +48,17 @@ export class OledPublicAssistant extends LitElement {
     label{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin:8px 0}
     select{max-width:100%;font:inherit} button:disabled{opacity:.55}
     .controls{display:flex;flex-wrap:wrap;gap:8px}
-    .dialogue{max-height:22dvh;overflow:auto;touch-action:pan-y;overscroll-behavior:contain}
+    .dialogue{max-height:min(54vh,430px);overflow:auto;touch-action:pan-y;overscroll-behavior:contain}
     .dialogue p{white-space:pre-wrap;overflow-wrap:anywhere;margin:5px 0}
+    .dialogue .chat-formatted{padding:12px 16px;margin:8px 0 14px;background:#102330;border-radius:12px;overflow-wrap:anywhere}
+    .chat-formatted h3,.chat-formatted h4{margin:0 0 8px}
+    .chat-formatted h4,.chat-formatted a{color:var(--ice)}
+    .chat-formatted ul,.chat-formatted ol{padding-inline-start:22px}
+    .chat-formatted li+li{margin-top:5px}
+    .chat-formatted pre{white-space:pre-wrap}
+    .commons-photo{margin:0 0 12px;background:#07131e;border-radius:10px;overflow:hidden}
+    .commons-photo img{display:block;width:100%;max-height:200px;object-fit:cover}
+    .commons-photo figcaption{padding:6px 10px;font-size:.8rem;color:#c4d9e3}
     form{display:flex;gap:8px;margin:8px 0}
     input[type=text]{width:100%;min-width:0;background:#07131e;color:inherit;font:inherit;border:1px solid #487184;border-radius:10px;padding:8px}
   `];
@@ -119,12 +131,16 @@ export class OledPublicAssistant extends LitElement {
         </select>
       </label>
       <button type="button" @click=${this.preview}>MP3-Hörprobe abspielen</button>
+      <label>Rezeptfotos von Wikimedia Commons <input type="checkbox" .checked=${this.settings.recipePhotos}
+        @change=${event => this.saveSettings({recipePhotos:event.target.checked})}></label>
       <p>Die Hörprobe enthält eine feste Begrüßung. Die Stimme für Antworten kommt vom gewählten Sprachassistenten.</p>
       <p role="status">${this.status}</p>
     </fieldset>`;
   }
 
   async open() {
+    this.photoSession?.abort();
+    this.photoSession = new AbortController();
     this.getRootNode().querySelector('.ambient-hit')?.setAttribute('inert','');
     this.opened = true;
     this.status = 'Bereit';
@@ -162,6 +178,7 @@ export class OledPublicAssistant extends LitElement {
   }
 
   stop() {
+    this.photoSession?.abort();
     this.run?.abort();
     this.run = null;
     this.busy = false;
@@ -177,11 +194,18 @@ export class OledPublicAssistant extends LitElement {
     this.renderRoot.querySelector('.voice-orb')?.focus();
   }
 
-  addMessage(text, author) {
-    this.messages = [...this.messages,{text,author}];
+  addMessage(text, author, question) {
+    const formatted = question === undefined ? null : renderAssistantAnswer(text, question);
+    this.messages = [...this.messages,{text,author,article:formatted?.article}];
+    if (formatted && this.settings.recipePhotos && this.photoSession) {
+      loadRecipePhoto(formatted.article, recipePhotoSubject(question, formatted.blocks), this.photoSession.signal);
+    }
     void this.updateComplete.then(()=>{
       const log = this.renderRoot.querySelector('.dialogue');
-      if (log) log.scrollTop = log.scrollHeight;
+      if (log) {
+        const article = formatted?.article;
+        log.scrollTop = article ? log.scrollTop + article.getBoundingClientRect().top - log.getBoundingClientRect().top : log.scrollHeight;
+      }
     });
   }
 
@@ -229,6 +253,7 @@ export class OledPublicAssistant extends LitElement {
         this.status = 'Assist denkt nach';
       }
       let answer = false;
+      let question = text ?? '';
       let playback;
       await beginAssistRun(this.hass,{
         text, pipeline:pipeline.id, conversationId:this.conversationId, signal:run.signal,
@@ -238,7 +263,10 @@ export class OledPublicAssistant extends LitElement {
           if (run.signal.aborted) return;
           if (type==='stt-end') {
             const heard = data?.stt_output?.text;
-            if (heard) this.addMessage(heard,'Du');
+            if (heard) {
+              question = heard;
+              this.addMessage(heard,'Du');
+            }
             this.status = 'Assist denkt nach';
           }
           if (type==='intent-end') {
@@ -247,7 +275,7 @@ export class OledPublicAssistant extends LitElement {
             const response = output?.response?.speech?.plain?.speech;
             if (response) {
               answer = true;
-              this.addMessage(response,figures[this.settings.figure].name);
+              this.addMessage(response,figures[this.settings.figure].name,question);
             }
           }
           if (type==='tts-end') playback = this.speak(data?.tts_output?.url,run.signal);
@@ -310,7 +338,9 @@ export class OledPublicAssistant extends LitElement {
         <button class="close-assistant" aria-label="Assistent schließen" @click=${this.close}></button>
         <div class="copy">
           <span class="state" role="status">${this.status}</span>
-          <div class="dialogue" role="log">${this.messages.map(({author,text})=>html`<p><strong>${author}</strong> · ${text}</p>`)}</div>
+          <div class="dialogue" role="log">${this.messages.map(({author,text,article})=>article
+            ? html`<div aria-label=${author}>${article}</div>`
+            : html`<p><strong>${author}</strong> · ${text}</p>`)}</div>
           <form @submit=${this.submit}>
             <input type="text" name="question" aria-label="Frage" placeholder="Frage schreiben" maxlength="1200">
             <button ?disabled=${this.busy}>Senden</button>
