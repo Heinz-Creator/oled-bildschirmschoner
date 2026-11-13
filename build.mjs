@@ -12,10 +12,16 @@ for (const theme of AMBIENT_WORLD_IDS) {
   }
 }
 await access(new URL('./dist/torn-paper.webp', import.meta.url));
+for (const figure of ['edgar','berta','hector']) {
+  for (const extension of ['jpg','mp3']) {
+    await access(new URL('./dist/assist-' + figure + '.' + extension, import.meta.url));
+  }
+}
 await build({
   entryPoints: ['src/card.js'],
   outfile: 'dist/oled-bildschirmschoner.js',
   bundle: true,
+  loader: {'.css':'text', '.jpg':'dataurl', '.mp3':'dataurl'},
   minify: true,
   format: 'esm',
   target: ['chrome100','safari15','firefox102'],

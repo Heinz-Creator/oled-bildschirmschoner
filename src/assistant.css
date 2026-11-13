@@ -1,0 +1,227 @@
+:host {
+  --ice:#9deafa;
+  position:absolute;
+  inset:0;
+  z-index:15;
+  pointer-events:none;
+  color:#edf9ff;
+  font:500 15px/1.4 Inter,system-ui,sans-serif;
+}
+* {box-sizing:border-box}
+[hidden] {display:none!important}
+button {
+  min-height:46px;
+  border:1px solid #4b7485;
+  border-radius:13px;
+  padding:8px 14px;
+  color:inherit;
+  background:#0e2230;
+  font:inherit;
+  cursor:pointer;
+}
+button:hover {background:#1b384a}
+button:focus-visible {outline:3px solid var(--ice);outline-offset:3px}
+.close-assistant {
+  position:absolute;
+  right:max(20px,env(safe-area-inset-right));
+  top:max(16px,env(safe-area-inset-top));
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:46px;
+  padding:0;
+  border:1px solid #8be9ff;
+  border-radius:50%;
+  background:#061b27d9;
+  box-shadow:0 0 12px #5cdcff60,inset 0 0 9px #5cdcff2a;
+}
+.close-assistant::before,.close-assistant::after {
+  content:'';
+  grid-area:1/1;
+  width:17px;
+  height:2px;
+  border-radius:2px;
+  background:#e1faff;
+  box-shadow:0 0 5px #5cdcff;
+  rotate:45deg;
+}
+.close-assistant::after {rotate:-45deg}
+.voice-dock {
+  position:absolute;
+  bottom:calc(max(24px,env(safe-area-inset-bottom)) + 44px);
+  left:50%;
+  translate:-50% 0;
+  display:grid;
+  justify-items:center;
+  width:min(440px,calc(100% - 32px));
+  pointer-events:none;
+}
+.voice-orb {
+  display:grid;
+  place-items:center;
+  width:64px;
+  height:64px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:radial-gradient(circle,#0a526780 6%,#041c29a6 48%,transparent 73%);
+  pointer-events:auto;
+}
+.voice-orb:hover {
+  background:radial-gradient(circle,#117b94b0 8%,#092e3dc7 52%,transparent 73%);
+}
+.voice-orb canvas {
+  width:100%;
+  height:100%;
+  filter:drop-shadow(0 0 2px #58e1ff) drop-shadow(0 0 7px #43dcffad);
+  animation:orb-turn 9s linear infinite;
+}
+@keyframes orb-turn {to {transform:rotate(1turn)}}
+@media (prefers-reduced-motion:reduce) {
+  .voice-orb canvas {animation:none}
+}
+.voice-caption {
+  margin:0 0 6px;
+  padding:9px 16px;
+  max-width:100%;
+  border-radius:22px;
+  background:#050e17f2;
+  color:#f1fbff;
+  font-size:clamp(15px,2.2vw,20px);
+  font-weight:600;
+  text-align:center;
+  text-wrap:balance;
+}
+.voice-caption:empty {
+  opacity:0;
+  padding:0;
+  margin:0;
+}
+.assistant {
+  position:absolute;
+  inset:0;
+  isolation:isolate;
+  overflow:hidden;
+  pointer-events:auto;
+  background:#04080c;
+}
+.home {
+  position:absolute;
+  top:max(16px,env(safe-area-inset-top));
+  left:max(20px,env(safe-area-inset-left));
+}
+.portrait {
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  overflow:hidden;
+  perspective:1200px;
+}
+.portrait .face {
+  position:absolute;
+  top:44%;
+  left:50%;
+  translate:-50% -48%;
+  display:block;
+  width:clamp(70dvh,100%,114dvh);
+  height:auto;
+  aspect-ratio:4/5;
+  object-fit:contain;
+  mask-image:linear-gradient(90deg,transparent,#000 15% 85%,transparent);
+  transform-origin:center 53%;
+}
+.portrait .hud {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  filter:drop-shadow(0 0 7px #b3edff6b);
+}
+.portrait::after {
+  position:absolute;
+  inset:0;
+  content:'';
+  pointer-events:none;
+  background:linear-gradient(0deg,#03070c 0%,#03070ce6 12%,transparent 35%,transparent 85%,#03070c8a),
+    radial-gradient(ellipse at 4% 57%,#ff341650,transparent 48%),
+    radial-gradient(ellipse at 99% 33%,#16c8ff38,transparent 51%);
+}
+.copy {
+  position:absolute;
+  left:50%;
+  bottom:max(20px,env(safe-area-inset-bottom));
+  translate:-50% 0;
+  width:min(500px,100% - 40px);
+  padding:14px 16px;
+  border:1px solid #69b7ca52;
+  border-radius:18px;
+  background:#080f17e8;
+}
+.state {display:block;color:var(--ice);font-size:13px;text-align:right}
+.subtitle {margin:8px 0 12px;min-height:2.8em;color:#c4d9e3}
+.chat-preview {
+  position:absolute;
+  top:max(74px,calc(env(safe-area-inset-top) + 58px));
+  right:max(20px,env(safe-area-inset-right));
+  width:min(250px,calc(50% - 16px));
+  padding:9px 12px;
+  text-align:left;
+  background:#061722ed;
+  border-color:#79d7ef8c;
+  box-shadow:0 0 20px #59dfff30,inset 0 0 14px #59dfff13;
+}
+.chat-preview strong {display:block;font-size:14px;color:#a6edfc}
+.chat-snippet {
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+  font-size:13px;
+}
+.chat {
+  position:absolute;
+  z-index:3;
+  inset:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom));
+  width:min(720px,calc(100% - 24px));
+  margin-inline:auto;
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  border:1px solid #80daf1a6;
+  border-radius:20px;
+  overflow:hidden;
+  background:#071018;
+  box-shadow:0 0 55px #000c,0 0 26px #55dfff2c;
+}
+.chat header,.chat-form {display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0a1c27}
+.chat header {justify-content:space-between;border-bottom:1px solid #3a6577}
+.chat h2 {margin:0;font-size:20px}
+.chat-history {position:relative;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;padding:14px}
+.chat-question,.chat-answer {width:fit-content;max-width:94%;padding:10px 13px;border-radius:13px}
+.chat-question {margin:0 0 10px auto;background:#1b4154;color:#f1fbff}
+.chat-answer {margin:0 0 14px;background:#102330;color:#e1f1f8}
+.chat-answer > p {margin:0}
+.chat-recipe {margin-top:12px}
+.chat-recipe img {display:block;width:100%;max-height:205px;object-fit:cover;border-radius:10px}
+.chat-recipe h3 {margin:8px 0 2px;font-size:20px}
+.chat-recipe h4 {margin:11px 0 4px;color:var(--ice)}
+.chat-recipe p,.chat-recipe ol {margin:0}
+.chat-recipe ol {padding-left:22px}
+.chat-recipe li + li {margin-top:6px}
+.chat-form {border-top:1px solid #3a6577}
+.chat-input {flex:1;min-width:0;min-height:44px;padding:9px 12px;border:1px solid #4b7485;border-radius:11px;background:#08131d;color:inherit;font:inherit}
+.chat-input:focus-visible {outline:2px solid var(--ice);outline-offset:2px}
+@media (max-width:650px),(max-aspect-ratio:1/1) {
+  .voice-dock {bottom:calc(max(24px,env(safe-area-inset-bottom)) + 30px)}
+  .voice-orb {width:54px;height:54px}
+}
+@media (max-height:520px) {
+  .copy {bottom:8px;padding:8px 10px}
+  .subtitle {min-height:0;margin:3px 0 6px}
+}
+@media (max-width:390px) {
+  .home {left:10px}
+  .close-assistant {right:10px}
+  .home {padding-inline:10px;font-size:13px}
+  .copy {width:calc(100% - 20px);padding-inline:10px}
+}

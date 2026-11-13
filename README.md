@@ -31,6 +31,15 @@ Licht, Rollos, Wiedergabe und Wetter werden nach Möglichkeit automatisch aus Ho
 
 Optional kannst du Hausverbrauch, PV-Leistung, gefühlte Temperatur, Kalender und eine Nachrichten-Entität wählen. Die Nachrichtenquelle ist ein Sensor, der den Titel als Zustand oder im Attribut `title` liefert. Kalenderdaten kommen aus dem gewählten Home-Assistant-Kalender. Eigene Fotos werden im Home Assistant des jeweiligen Nutzers gespeichert. Die Karte zeigt Zustände an und steuert keine Geräte.
 
+## Figuren und Sprachassistenten
+
+Öffne **Bildschirmschoner einstellen → Assistent** und aktiviere **Assistent aktiv**. Wähle Edgar, Berta Berlin oder Haunting-Hector. Im Bildschirmschoner öffnet das leuchtende Symbol die Figur mit Chat und der Taste **Zuhören**.
+
+- Wähle für jede Figur unter **Sprachassistent für …** einen Assist-Assistenten deiner eigenen Home-Assistant-Installation. Home Assistant verwendet dessen konfigurierte Stimme. Die Zuordnung gilt für dieses Display.
+- Bei **Home-Assistant-Standard** oder wenn eine gespeicherte Zuordnung wegfällt, gilt der bevorzugte Assist-Assistent. Mit nur einem eingerichteten Assistenten verwenden alle Figuren dieselbe Stimme.
+- Richte Assist unter **Einstellungen → Sprachassistenten** ein. Für Mikrofoneingaben braucht der Browser in der Regel HTTPS und Mikrofonzugriff. Ohne Sprachausgabe bleiben Antworten im Chat sichtbar.
+- **MP3-Hörprobe abspielen** spielt die kurze, mit eSpeak NG erzeugte Begrüßung der gewählten Figur ab. Die drei Hörproben sind im Paket enthalten. Neue Antworten erzeugt Home Assistant mit dem gewählten Assist-Assistenten.
+
 ## Feiertage und eigene Fotos
 
 Der Bildschirmschoner wählt passende Motive nach Datum und Ortszeit in Home Assistant. So wechselt die gewählte Motivwelt etwa ab dem ersten Advent, rund um Ostern oder zu Silvester. Im Einstellungsdialog kannst du einzelne Anlässe ausschalten. Im gemischten Modus wechseln sich eigene Fotos und automatische Motive ab. Im Fotomodus erscheint dein Album, sobald es Bilder enthält.
