@@ -34,7 +34,7 @@ Die Tests wurden auch aus einer eigenen Kopie des öffentlichen Repositorys ohne
 
 ## Paket und Datenschutz
 
-Keine privaten Hausgeräte, Tailscale-Adresse, Telefonnummer, Google-Client-ID, Google-Secret, Zugriffstoken oder privaten Google-Fotos im Veröffentlichungspaket. Der öffentliche Build enthält die vier freigegebenen Welten; private Haus-/Teddy-Erweiterungen werden nicht als öffentliche Motive angeboten. Schriftarten sind im Build eingebettet; die normale Anzeige lädt keine Google-Fonts-Schriftdateien nach.
+Keine privaten Hausgeräte, Tailscale-Adresse, Telefonnummer, Google-Client-ID, Google-Secret, Zugriffstoken oder privaten Google-Fotos im Veröffentlichungspaket. Der öffentliche Build enthält die fünf freigegebenen Welten einschließlich Teddy auf Tour. Das private Hausmotiv bleibt separat. Schriftarten sind im Build eingebettet; die normale Anzeige lädt keine Google-Fonts-Schriftdateien nach.
 
 HACS-Struktur: passender Modulname unter `dist/`, vollständige Bild-/Audio-/Anmeldedialogdateien, Manifest und ausführliche README. Musik-Jingles mit CC0-Quellen dokumentiert; Schriftlizenzen beigelegt.
 

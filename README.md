@@ -8,8 +8,8 @@
 
 ## Highlights
 
-- **Vier öffentliche Motivwelten:** Baum & Jahreszeiten, Minecraft-Welt im Blockstil, Lichtküste und Die kleine Nachtbahn. Klassische Motive und zusätzliche **Animierte Welten** sind getrennt auswählbar. Auch gemeinsamer Motivwechsel.
-- **84 illustrierte Bilder** für die drei Kunstwelten, dazu die animierte Nachtbahn. Frühling, Sommer, Herbst und Winter; Morgen-/Abendmotive und passende Feiertage. Die Nachtbahn fährt durch das Bild.
+- **Fünf Motivwelten:** Baum & Jahreszeiten, Minecraft-Welt im Blockstil, Lichtküste, Die kleine Nachtbahn und Teddy auf Tour. Klassische Motive und zusätzliche **Animierte Welten** sind getrennt auswählbar. Auch gemeinsamer Motivwechsel.
+- **84 illustrierte Bilder** für die drei Kunstwelten, dazu die animierte Nachtbahn. Frühling, Sommer, Herbst und Winter; Morgen-/Abendmotive und passende Feiertage. Die Nachtbahn fährt durch das Bild. Bei Teddy auf Tour fährt der grüne Wagen durch die Landschaft, mit passenden Jahreszeiten, Feiertagen, Wetter und eigenen Ereignisszenen.
 - **Echtes Wetter und Sonnenstand:** Tag/Nacht automatisch aus `sun.*`, Wettereffekte aus der gewählten Wetterentität. Optional Immer Tag / Immer Nacht. Reduzierte Bewegung wird berücksichtigt.
 - **Hausstatus direkt im Motiv:** Uhr, Datum, Wetter, Licht, Rollos, Medien, Hausverbrauch und PV. „Gerade im Haus“ steht als gegliederter Text mit kräftigen Kategorien direkt auf der Abrissfläche der Kunstmotive, ohne zusätzliche Fensterbox.
 - **Fünf Ereignisarten:** Waschmaschine fertig, Geschirrspüler fertig, Müll, Solar-Laden und Besuch. In animierten Welten mit eigenen Szenen; klassische Motive behalten ihre ursprüngliche Illustration. Kein universeller Sackkarren-Einspieler über jedem Motiv.
@@ -32,6 +32,8 @@
 | ![Müll in der Blockwelt](docs/images/blockwelt.jpg) | ![Besuch am Bahnhof](docs/images/nachtbahn.jpg) |
 
 Alle Aufnahmen zeigen Beispieldaten aus der visuellen Testvorschau.
+
+![Teddy auf Tour im Herbst](docs/images/teddy-auf-tour.jpg)
 
 ## Installation
 

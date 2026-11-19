@@ -12,6 +12,7 @@ for (const theme of AMBIENT_WORLD_IDS) {
     }
   }
 }
+await access(new URL('./dist/teddy-auf-tour.html', import.meta.url));
 await access(new URL('./dist/torn-paper.webp', import.meta.url));
 for (const figure of ['edgar','berta','hector']) {
   for (const extension of ['jpg','mp3']) {

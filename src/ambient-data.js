@@ -3,7 +3,7 @@ export {AMBIENT_OCCASIONS} from './ambient-calendar.js';
 export const AMBIENT_GALLERY_KEY='oled_bildschirmschoner_gallery_v1';
 export const AMBIENT_DEVICE_KEY='oled_bildschirmschoner_device_v1';
 export const AMBIENT_WORLD_IDS=['tree','minecraft','coast'];
-export const AMBIENT_MOTIFS=[{id:'tree',name:'Baum & Jahreszeiten'},{id:'minecraft',name:'Minecraft-Welt'},{id:'coast',name:'Lichtküste'},{id:'railway',name:'Die kleine Nachtbahn'},{id:'mixed',name:'Alle Motivwelten im Wechsel'}];
+export const AMBIENT_MOTIFS=[{id:'tree',name:'Baum & Jahreszeiten'},{id:'minecraft',name:'Minecraft-Welt'},{id:'coast',name:'Lichtküste'},{id:'railway',name:'Die kleine Nachtbahn'},{id:'teddy',name:'Teddy auf Tour'},{id:'mixed',name:'Alle Motivwelten im Wechsel'}];
 AMBIENT_MOTIFS.push(...AMBIENT_MOTIFS.filter(m=>m.id!=='mixed').map(m=>({id:'stories-'+m.id,name:m.name,group:'Animierte Welten'})),{id:'stories-mixed',name:'Alle animierten Welten im Wechsel',group:'Animierte Welten'});
 export const DEFAULT_AMBIENT={motif:'tree',disabledOccasions:[],enabled:false,idleMinutes:2,slideSeconds:60,mode:'auto',animated:true,holidays:true};
 export const artworkUrl = name => new URL('./' + name, import.meta.url).href;
@@ -17,11 +17,15 @@ export function ambientScene(now,weather='',holidays=true,zone='Europe/Berlin',m
  const calendar=ambientCalendar(now,zone),{hour,season}=calendar;
  const phase=hour<6||hour>=22?'night':hour<11?'morning':hour<18?'day':'evening',holiday=holidays?calendar.occasions.find(id=>!disabledOccasions.includes(id))||null:null;
  const snow=['snowy','snowy-rainy'].includes(weather),rain=['rainy','pouring','lightning-rainy','hail','snowy-rainy'].includes(weather),wind=['windy','windy-variant'].includes(weather);
- const rotationWorlds=[...AMBIENT_WORLD_IDS,'railway'];
+ const rotationWorlds=[...AMBIENT_WORLD_IDS,'railway','teddy'];
  const requested=AMBIENT_MOTIFS.some(m=>m.id===motif)?motif:'tree',animatedWorld=requested.startsWith('stories-'),baseRequested=animatedWorld?requested.slice(8):requested,theme=baseRequested==='mixed'?rotationWorlds[Math.floor(now/(Math.max(15,Math.min(600,Number(slideSeconds)||60))*1000*(photoMode==='mix'?2:1)))%rotationWorlds.length]:baseRequested;
  const assetNight=typeof sunNight==='boolean'?sunNight:['night','evening'].includes(phase);
  const baseKey=`${holiday||(snow?'winter':season)}-${assetNight?'evening':'morning'}`,key=theme==='tree'?baseKey:theme+'-'+baseKey;
- return {key,theme,animatedWorld,season,phase,assetNight,morning:hour>=6&&hour<9,night:phase==='night',holiday,effect:snow?'snow':rain?'rain':wind?(season==='autumn'?'leaves':'wind'):'none',url:artworkUrl(key+'.webp')};
+ const teddyOptions=new URLSearchParams({scene:holiday||(snow?'winter':season),light:assetNight?'night':'day'});
+ if(animatedWorld)teddyOptions.set('story-world','1');
+ if(weather)teddyOptions.set('weather',weather);
+ const url=theme==='teddy'?artworkUrl('teddy-auf-tour.html')+'?'+teddyOptions:artworkUrl(key+'.webp');
+ return {key,theme,animatedWorld,season,phase,assetNight,morning:hour>=6&&hour<9,night:phase==='night',holiday,effect:snow?'snow':rain?'rain':wind?(season==='autumn'?'leaves':'wind'):'none',url};
 }
 export function ambientSlide(scene,gallery,prefs,tick){const photos=ambientGallery(gallery),n=Math.max(0,Math.floor(tick/prefs.slideSeconds));if(!photos.length||prefs.mode==='auto'||prefs.mode==='mix'&&n%2===0)return {url:scene.url,name:'Automatische Kunstszene'};const i=prefs.mode==='mix'?Math.floor(n/2):n,p=photos[i%photos.length];return {url:ambientPhotoUrl(p.id),name:p.name};}
 export function canStartAmbient({enabled,idleMs,idleMinutes,blocked,hidden,pointerDown}){return !!enabled&&!blocked&&!hidden&&!pointerDown&&idleMs>=idleMinutes*60000;}

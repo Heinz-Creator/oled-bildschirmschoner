@@ -6,7 +6,7 @@ const source = new URL('./src/night-train/', import.meta.url);
 export async function nightTrainDocument({publicOnly=false}={}) {
   const artwork = {};
   for (const name of ['seasons','train','events','holidays','world-scenes','seasons-day','stories-tree','stories-railway','stories-minecraft','stories-coast','stories-home','stories-teddy']) {
-    if(publicOnly&&['stories-home','stories-teddy','world-scenes'].includes(name))continue;
+    if(publicOnly&&['stories-home','world-scenes'].includes(name))continue;
     artwork[name] = 'data:image/webp;base64,' + (await readFile(new URL('assets/'+name+'.webp',source))).toString('base64');
   }
   const bundle = await build({entryPoints:[fileURLToPath(new URL('app.js',source))],bundle:true,write:false,format:'iife',minify:true,target:['safari15','chrome100'],legalComments:'inline'});
