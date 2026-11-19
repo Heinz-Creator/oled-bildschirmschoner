@@ -49,6 +49,8 @@ Alle Aufnahmen zeigen Beispieldaten aus der visuellen Testvorschau.
 
 Der eigenständige Schoner benötigt kein OLED-Zuhause-Dashboard. Home Assistant muss im Browser offen bleiben und das Gerät sein Display eingeschaltet halten. Die Karte schützt nicht vor allen OLED-Einbrenneffekten; feste Bedienelemente und das Displayverhalten hängen auch vom Gerät ab.
 
+Bei der Meldung „Der installierte Inhalt enthält keine oled-bildschirmschoner.js“ das Repository in HACS neu laden und Version **0.2.2** oder neuer wählen. HACS lädt das vollständige Paket vom Git-Tag.
+
 ### Manuell
 
 Den gesamten Inhalt von `dist/` unter `www/community/oled-bildschirmschoner/` ablegen. Bei erstmals angelegtem `www` HA neu starten. Ressource `/local/community/oled-bildschirmschoner/oled-bildschirmschoner.js` als JavaScript-Modul eintragen. Die komplette Ordnerstruktur ist wichtig: Bilder und Klingeldateien sind Bestandteile des Pakets.
