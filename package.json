@@ -1,12 +1,16 @@
 {
   "name": "oled-bildschirmschoner",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
-    "test": "node --test tests.mjs"
+    "test": "node --test tests.mjs night-train.test.mjs story-worlds.test.mjs waste-notice.test.mjs event-ack.test.mjs doorbell.test.mjs public-release.test.mjs"
   },
-  "dependencies": { "lit": "3.3.3" },
-  "devDependencies": { "esbuild": "0.28.2" }
+  "dependencies": {
+    "lit": "3.3.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
 }

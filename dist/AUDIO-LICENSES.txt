@@ -1,0 +1,12 @@
+OLED bell-tree.wav, bell-minecraft.wav, bell-coast.wav, bell-railway.wav:
+Original synthesized short chimes created for this project. MIT, see repository LICENSE.
+
+bell-fanfare.wav and bell-comic.wav:
+Spring Spring: The War Over A Melon Field - Themes and Jingles (2019), CC0.
+Source: https://opengameart.org/content/the-war-over-a-melon-field-themes-and-jingles
+Original files: win_1.ogg (win fanfare), charselect_2.ogg (charselect).
+Adaptations: excerpted to 8 seconds, loudness normalization, fade in/out.
+The source credits a bicycle horn sound to AntumDeluge.
+License: https://creativecommons.org/publicdomain/zero/1.0/
+
+No YouTube audio, commercial songs or voice clones are included in the bell package.

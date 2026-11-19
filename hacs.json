@@ -1,5 +1,6 @@
 {
   "name": "OLED Bildschirmschoner",
   "filename": "oled-bildschirmschoner.js",
-  "render_readme": true
+  "render_readme": true,
+  "homeassistant": "2026.7.0"
 }

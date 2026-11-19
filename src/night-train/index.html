@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Die kleine Nachtbahn · OLED Vorschau</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+
+          <h1>Die kleine Nachtbahn</h1>
+          <p>Ein warmes Licht auf einer langen Reise.</p>
+        </div>
+        <button id="fullscreen">Vollbild ansehen ↗</button>
+      </header>
+      <section id="screen" aria-label="Animierter Nachtbahn-Bildschirmschoner">
+        <img id="themeImage" alt="" hidden><iframe id="themeTeddy" title="Animierte Teddy-Motivwelt" sandbox="allow-scripts" hidden></iframe><canvas id="world" aria-hidden="true"></canvas>
+        <div class="overlay">
+          <div>
+            <p id="greeting">Ein ruhiger Abend.</p>
+            <time id="clock"></time>
+            <p id="date"></p>
+          </div>
+          <div class="weather">
+            <span id="temperature">−2°</span>
+            <p id="weather">Klare Winternacht</p><p id="powerHint"></p>
+          </div>
+        </div>
+        <div class="world-toolbar" role="group" aria-label="Musik und Bildschirmschoner"><button id="nativeSettings" aria-label="Bildschirmschoner einstellen" title="Einstellungen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 3-1 3-3 1-2 4 2 3 1 3 4 2 3-2 3-1 2-4-2-3-1-3-4-2z"/><circle cx="12" cy="11" r="3"/></svg></button>
+        <button
+          id="musicButton"
+          class="music-icon"
+          aria-label="Passende Musik abspielen"
+          title="Passende Musik abspielen"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 9h4l5-4v14l-5-4H4zM17 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"
+            />
+          </svg>
+        </button>
+        <button id="stopMusic" aria-label="Musik stoppen" title="Musik stoppen"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg></button></div><img id="legacyPhoto" alt="Eigenes Fotoalbum" hidden><div id="photoLayer" aria-hidden="true"></div><div id="nowPlaying" hidden role="status"><img id="trackCover" alt="Albumcover" hidden><div><strong id="trackTitle"></strong><span id="trackArtist"></span></div><i class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></i></div><div id="musicFeedback" role="status"></div>
+        <div id="notice" role="status" aria-live="polite"></div><aside id="houseStatus" aria-label="Gerade im Haus"><h2>Gerade im Haus</h2><div id="houseRows"></div></aside><div id="previewBanner" hidden><span>Testvorschau · keine Geräteaktionen</span><button id="endPreview">Test beenden</button></div>
+        <div class="bottom">
+          <span id="sceneLabel"></span><span id="worldName">OLED Zuhause</span>
+        </div>
+        <button id="exitFull" aria-label="Vollbild beenden">×</button>
+      </section>
+      <section class="controls" aria-label="Vorschau einstellen">
+        <section id="displayBasics"><h2>Deine Anzeige</h2><div class="settings"><label>Bildauswahl<select id="displaySourcePlaceholder" hidden></select></label><label>Motivwelt<select id="motif"></select></label><label id="slidePlaceholder">Bildwechsel</label></div><div class="display-switches"><label><input id="displayEnabled" type="checkbox">Automatisch starten</label><label>Ruhezeit in Minuten<input id="idleMinutes" type="number" min="1" max="30" value="2"></label><label><input id="displayAnimated" type="checkbox" checked>Wetter animieren</label><label><input id="displayHolidays" type="checkbox" checked>Feiertagsmotive</label></div><details class="occasion-list"><summary>Feiertage auswählen</summary><div id="occasionChoices"></div></details></section><div class="settings">
+          <label
+            >Jahreszeit<select id="season"><option value="auto">Automatisch nach Jahreszeit</option>
+              <option value="spring">Frühling</option>
+              <option value="summer">Sommer</option>
+              <option value="autumn">Herbst</option>
+              <option value="winter" selected>Winter</option>
+            </select></label
+          ><label
+            >Anlass<select id="occasion">
+              <option value="auto">Automatisch nach Datum</option>
+              <option value="none">Ein ganz normaler Tag</option>
+              <option value="easter">Ostern</option>
+              <option value="may">Maifeiertag</option>
+              <option value="mothers">Muttertag</option>
+              <option value="fathers">Vatertag</option>
+              <option value="halloween">Halloween</option>
+              <option value="nicholas">Nikolaus</option>
+              <option value="christmas" selected>Weihnachten</option>
+              <option value="christmas_eve">Heiligabend · 24. Dezember</option>
+              <option value="newyear">Silvester</option>
+              <option value="birthday">Geburtstag</option>
+            </select></label
+          ><label
+            >Tag & Nacht<select id="light"><option value="auto" selected>Automatisch nach Sonnenstand</option><option value="day">Immer Tag</option><option value="night">Immer Nacht</option></select></label
+          ><label
+            >Wetter<select id="weatherSelect">
+              <option value="auto">Zur Jahreszeit passend</option>
+              <option value="clear">Klar</option>
+              <option value="rain">Regen</option>
+              <option value="snow">Schnee</option>
+            </select></label
+          >
+        </div>
+        <section id="nativeBindings" hidden><h2>Echte Hausmeldungen</h2><p>Ohne eigene Zuordnung werden passende Meldungen aus dem OLED-Hausstatus übernommen. Alternativ die Entität und ihren auslösenden Zustand auswählen.</p><datalist id="nativeEntities"></datalist><div id="bindingRows"></div><p id="bindingStatus" role="status"></p></section><div class="events">
+          <h2>Ereignisse ausprobieren</h2>
+          <p>
+            Schalter aktivieren, um die kleinen Szenen zu testen. Diese Schalter
+            sind Beispieldaten.
+          </p>
+          <div class="toggles">
+            <label
+              ><input type="checkbox" data-event="laundry" /><span
+                >Waschmaschine fertig</span
+              ></label
+            ><label
+              ><input type="checkbox" data-event="dishes" /><span
+                >Geschirrspüler fertig</span
+              ></label
+            ><label
+              ><input type="checkbox" data-event="waste" /><span
+                >Morgen Müllabholung</span
+              ></label
+            ><label
+              ><input type="checkbox" data-event="charging" /><span
+                >Auto lädt mit Sonnenstrom</span
+              ></label
+            ><label
+              ><input type="checkbox" data-event="visitor" /><span
+                >Besuch an der Tür</span
+              ></label
+            >
+          </div>
+        </div>
+        <details class="settings-section" open>
+          <summary>Ereignisse & Anzeige</summary>
+          <p>
+            Besuch wird sofort angezeigt. Danach geht es mit den übrigen
+            Meldungen weiter.
+          </p>
+          <div class="settings three">
+            <label
+              >Ereignisse darstellen<select id="eventDisplay">
+                <option value="both">Grafik & Text</option>
+                <option value="graphics">Nur Grafiken</option>
+              </select></label
+            >
+            <label
+              >Fertigmeldungen ausblenden nach<select id="finishedLifetime">
+                <option value="30">30 Sekunden</option>
+                <option value="120" selected>2 Minuten</option>
+                <option value="300">5 Minuten</option>
+                <option value="900">15 Minuten</option>
+                <option value="0">Bis aus / ohne Zeitlimit · mit Quittieren</option>
+              </select></label
+            >
+            <label
+              >Müll-Erinnerung wiederholen nach<select id="wasteRepeat">
+                <option value="30">30 Sekunden zum Testen</option>
+                <option value="120">2 Minuten</option>
+                <option value="300" selected>5 Minuten</option>
+                <option value="900">15 Minuten</option>
+                <option value="1800">30 Minuten</option>
+              </select></label
+            >
+          </div>
+          <p class="settings-help">Fertigmeldungen verschwinden nach der gewählten Zeit. Bei „Bis aus / ohne Zeitlimit“ erscheint Quittieren. Damit bleibt dieses Ereignis auf diesem Display ausgeblendet, bis ein neues Ereignis gemeldet wird. Ohne Quittierung gelten die gewählten Anzeige- und Wiederholungszeiten weiter. Mit Ablaufzeit wird kein Quittierbutton angezeigt.</p>
+          <p class="settings-help">Müll: am Vortag rausstellen, am Termin Abholung. Der Wiederholungsabstand startet nach jeder kurzen Müllszene; es wird kein Ton ausgelöst. „Abgeholt“ erst nach deiner Bestätigung, nicht allein nach Uhrzeit. Bestätigungen gelten für dieses Display und diesen Tag.</p>
+          <div id="eventDurations" class="duration-grid"></div>
+          <p id="eventState" role="status"></p>
+        </details>
+        <details class="settings-section">
+          <summary>Musik & Lautsprecher</summary>
+          <div class="settings three">
+            <label
+              >Musikquelle<select id="musicSource">
+                <option value="ha">Alexa / Home Assistant</option>
+                <option value="youtube">YouTube-Playlist</option>
+              </select></label
+            >
+            <label
+              >Lautsprecher<select id="speaker">
+                <option value="">Home Assistant verbinden</option>
+              </select></label
+            >
+            <div class="setting-action">
+              <button id="connectHa">Home Assistant verbinden</button>
+              <p id="haStatus" role="status">
+                Die Verbindung gilt für diese lokale Vorschau.
+              </p>
+            </div>
+          </div>
+          <p>
+            Das Lautsprechersymbol startet die Musik. Bei Alexa wird der
+            passende Textbefehl gesendet. Music-Assistant-Lautsprecher erhalten
+            denselben Musikwunsch als Playlist-Suche. YouTube läuft im Browser
+            auf diesem Display.
+          </p>
+          <label class="wide-label"
+            >Musik für diesen Anlass<input id="musicCommand" readonly
+          /></label>
+          <label class="wide-label"
+            >YouTube-Playlist für diesen Anlass<input
+              type="url"
+              id="youtubeLink"
+              placeholder="https://www.youtube.com/playlist?list=…"
+          /></label>
+          <p id="playlistStatus" role="status"></p>
+          <div id="youtubePlayer" hidden>
+            <button id="closeYoutube">YouTube schließen</button>
+            <div id="youtubeFrame"></div>
+            <a id="youtubeExternal" target="_blank" rel="noopener"
+              >Playlist auf YouTube öffnen ↗</a
+            >
+          </div>
+        </details>
+        <details class="settings-section">
+          <summary>Eigene Fotoalben</summary>
+          <div class="album-actions">
+            <button id="chooseFolder">Albumordner auswählen</button
+            ><button id="choosePhotos">Fotos auswählen</button
+            ><button id="chooseZip">Album-ZIP importieren</button>
+          </div>
+          <input
+            type="file"
+            id="albumFolder"
+            webkitdirectory
+            multiple
+            hidden
+          /><input
+            type="file"
+            id="albumFiles"
+            accept="image/*"
+            multiple
+            hidden
+          /><input
+            type="file"
+            id="albumZip"
+            accept=".zip,application/zip"
+            hidden
+          />
+          <p>
+            Wähle einen ganzen Albumordner oder einen ZIP-Export, auch aus
+            Google Takeout. Die Fotos bleiben lokal in diesem Browser
+            gespeichert.
+          </p>
+          <div class="settings three">
+            <label
+              >Bildauswahl<select id="backgroundMode">
+                <option value="train">Gewählte Motivwelt</option>
+                <option value="photos">Eigene Fotoalben</option>
+                <option value="mixed">Motivwelt & Fotos im Wechsel</option>
+              </select></label
+            >
+            <label
+              >Reihenfolge<select id="photoOrder">
+                <option value="ordered">Nacheinander</option>
+                <option value="shuffle">Zufallswiedergabe</option>
+              </select></label
+            >
+            <label
+              >Bildwechsel nach<select id="photoInterval">
+                <option value="5">5 Sekunden zum Testen</option>
+                <option value="15">15 Sekunden</option>
+                <option value="30" selected>30 Sekunden</option>
+                <option value="60">1 Minute</option>
+                <option value="300">5 Minuten</option>
+              </select></label
+            >
+          </div>
+          <div id="albums"></div>
+          <p id="albumStatus" role="status"></p><section id="haPhotos" hidden><h3>Vorhandene Fotos aus Home Assistant</h3><p>Diese Bilder bleiben erhalten und werden zusammen mit deinen aktivierten Alben abgespielt.</p><div id="haPhotoList"></div></section>
+          <details class="google-settings">
+            <summary>Google Fotos direkt auswählen</summary>
+            <p>
+              Für die direkte Google-Auswahl ist eine eigene OAuth-Client-ID mit
+              aktivierter Photos Picker API erforderlich. Als
+              JavaScript-Ursprung dieser Vorschau wird
+              <code id="googleOrigin"></code> verwendet. Alternativ oben einen
+              Albumordner oder Google-Takeout-ZIP auswählen.
+            </p>
+            <label class="wide-label"
+              >Google OAuth-Client-ID<input
+                id="googleClientId"
+                placeholder="…apps.googleusercontent.com" /></label
+            ><button id="googleConnect">Fotos bei Google auswählen</button
+            ><button id="googleCancel" hidden>Auswahl abbrechen</button>
+            <p id="googleStatus" role="status"></p>
+            <a href="https://takeout.google.com/" target="_blank" rel="noopener"
+              >Alben mit Google Takeout exportieren ↗</a
+            >
+          </details>
+        </details>
+        <footer>
+          <button id="pause" aria-pressed="false">Animation pausieren</button
+          ><label class="quiet"
+            ><input type="checkbox" id="hideUi" />Uhr & Meldungen
+            ausblenden</label
+          ><span>Bewegung reduzieren wird berücksichtigt.</span>
+        </footer>
+      </section>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

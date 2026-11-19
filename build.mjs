@@ -1,3 +1,4 @@
+import {nightTrainPlugin} from './build-night-train.mjs';
 import { build } from 'esbuild';
 import { access } from 'node:fs/promises';
 import { AMBIENT_OCCASIONS, AMBIENT_WORLD_IDS } from './src/ambient-data.js';
@@ -18,6 +19,7 @@ for (const figure of ['edgar','berta','hector']) {
   }
 }
 await build({
+  plugins: [nightTrainPlugin({publicOnly:true})],
   entryPoints: ['src/card.js'],
   outfile: 'dist/oled-bildschirmschoner.js',
   bundle: true,

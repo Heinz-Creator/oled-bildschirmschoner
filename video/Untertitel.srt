@@ -1,0 +1,151 @@
+1
+00:00:00,000 --> 00:00:13,000
+Dein Zuhause wird lebendig.
+Ein eigenständiger Bildschirmschoner für Home Assistant: echte Hausdaten, illustrierte Motive, animierte Ereignisse und eigene Fotos. Dieser Rundgang zeigt Beispieldaten. Es werden keine Geräte gesteuert.
+
+2
+00:00:13,000 --> 00:00:26,000
+Installieren mit HACS
+Repository Heinz-Creator/oled-bildschirmschoner als benutzerdefiniertes Dashboard-Repository hinzufügen. Herunterladen, Browser neu laden und die Karte im eigenen Dashboard hinzufügen. Bilder und Klänge kommen mit dem Paket.
+
+3
+00:00:26,000 --> 00:00:39,000
+Auf deinem Display starten
+Bildschirmschoner einstellen öffnen. Automatisch starten aktivieren und die Ruhezeit wählen. Das Dashboard muss geöffnet und das Display eingeschaltet bleiben. Die Startschaltfläche im Dashboard ist optional.
+
+4
+00:00:39,000 --> 00:00:52,000
+Ein Menü für alle Welten
+Anzeige, Meldungen, Musik und Fotoalben: Die gemeinsamen Einstellungen gelten für die ausgewählten Motive auf diesem Display. Bildauswahl und Wechselintervall haben jeweils genau eine Stelle.
+
+5
+00:00:52,000 --> 00:01:05,000
+Klassisch oder animiert
+Baum & Jahreszeiten, Minecraft-Welt, Lichtküste und Die kleine Nachtbahn. Bisherige Motive bleiben getrennt von den zusätzlichen Animierten Welten. Klassische Illustrationen erhalten keine allgemeine Sackkarrenfigur.
+
+6
+00:01:05,000 --> 00:01:18,000
+Die animierte Waldwelt
+Eine fertige Waschmaschine wird als Szene mit Waldbewohnern und Wäscheleine gezeigt. Die Ereignisse gehören zur gewählten Welt. Diese kurze Aufnahme stammt aus der echten Karten-Vorschau.
+
+7
+00:01:18,000 --> 00:01:31,000
+An der Lichtküste
+Der Geschirrspüler ist fertig. Die Küstenwelt verwendet eine andere, zu ihrer Landschaft passende Szene. Größe, Ort und Bildsprache unterscheiden sich von der Waldwelt.
+
+8
+00:01:31,000 --> 00:01:44,000
+Die Blockwelt
+Müll, Geräte, Besuch und Solar-Laden erhalten eigene Darstellungen im Blockstil. Das Motiv ist eine inoffizielle Projektillustration. Kein Bezug zu Mojang oder Microsoft.
+
+9
+00:01:44,000 --> 00:01:57,000
+Die kleine Nachtbahn
+Die Bahn bewegt sich durch die Landschaft. Eine Besuchsmeldung bekommt sofort Vorrang vor den anderen Ereignissen. Hier: Besuch am Bahnhof, als reine Funktionsvorschau ohne Klingel oder Durchsage.
+
+10
+00:01:57,000 --> 00:02:10,000
+Vier Jahreszeiten
+Frühling, Sommer, Herbst und Winter wechseln automatisch nach Datum. Die drei Kunstwelten enthalten zusammen 84 Tag-, Nacht-, Saison- und Feiertagsbilder. Die Nachtbahn ergänzt diese Auswahl.
+
+11
+00:02:10,000 --> 00:02:23,000
+Tag, Nacht und echtes Wetter
+Standard ist automatisch nach Sonnenstand aus Home Assistant. Immer Tag und Immer Nacht sind ebenfalls wählbar. Regen und Schnee folgen den gemeldeten Wetterdaten; reduzierte Bewegung wird berücksichtigt.
+
+12
+00:02:23,000 --> 00:02:36,000
+Feiertage auswählen
+Advent, Weihnachten, Nikolaus, Silvester, Valentinstag, Ostern, Muttertag, Vatertag, Pfingsten, Einheit und Halloween. Einzelne Anlässe lassen sich ausschalten. Osterhase und Weihnachtsmann ergänzen passende Szenen.
+
+13
+00:02:36,000 --> 00:02:49,000
+Gerade im Haus
+Licht und Rollos werden in Kategorien mit kräftigen Überschriften dargestellt. Medien, Hausverbrauch und PV kommen aus den gewählten HA-Quellen. Unbekannte Werte werden nicht als bestätigte Zustände erfunden.
+
+14
+00:02:49,000 --> 00:03:02,000
+Eigene Ereignisse zuordnen
+Unter Meldungen eigene Sensoren und Auslösezustände wählen: Waschmaschine, Geschirrspüler, Müll, Solar-Laden und Besuch. Die Regeln gelten über alle Motive hinweg. Testschalter erzeugen nur visuelle Beispiele.
+
+15
+00:03:02,000 --> 00:03:15,000
+Mehrere Meldungen zugleich
+Besuch unterbricht sofort. Danach wechseln die übrigen Ereignisse nacheinander. Die Anzeigedauer ist je Ereignis wählbar. Text mit Grafik oder nur Grafik lässt sich gemeinsam einstellen.
+
+16
+00:03:15,000 --> 00:03:28,000
+Ablaufzeit oder Quittieren
+Fertigmeldungen verschwinden nach der gewählten Zeit. Bei Bis aus / ohne Zeitlimit erscheint Quittieren. Eine quittierte Meldung bleibt weg, bis der nächste erkannte Gerätezyklus eine neue Meldung erzeugt.
+
+17
+00:03:28,000 --> 00:03:41,000
+Müll: vorher und am Abholtag
+Am Vortag erinnert die Karte ans Rausstellen, am Termin an die Abholung. Wiederholung bedeutet erneutes Anzeigen nach der Pause. Abgeholt zählt erst nach einer Bestätigung, nicht allein nach Datum.
+
+18
+00:03:41,000 --> 00:03:54,000
+Geräte ohne Fertigsensor
+Im Karteneditor eine geeignete Messsteckdose mit Leistungssensor in Watt wählen. Start- und Ende-Schwellen sowie Wartezeiten einstellen. Die Karte erstellt Status-Helfer und Automation; die Steckdose bleibt eingeschaltet.
+
+19
+00:03:54,000 --> 00:04:07,000
+Musik startet nur auf Knopfdruck
+Oben befinden sich Start und Stop. Music Assistant, Alexa Devices oder Alexa Media Player können je nach eigener Integration passende Musik anfordern. Ein Motivwechsel startet keine Wiedergabe. In diesem Video bleibt alles stumm.
+
+20
+00:04:07,000 --> 00:04:20,000
+Titel, Cover und YouTube
+Titel, Interpret und Cover kommen vom gewählten Player, wenn er sie liefert. Stop beendet oder pausiert dessen Wiedergabe. Eigene YouTube-Playlist-Links spielen alternativ im eingeblendeten Player auf diesem Display.
+
+21
+00:04:20,000 --> 00:04:33,000
+Die Haustürklingel einrichten
+Eigenen Klingelsensor und Lautsprecher auswählen. Bei Zustandsentitäten den echten Klingelzustand eintragen. Event-Entitäten verwenden den Empfang eines Ereignisses. Zum Speichern sind HA-Administratorrechte erforderlich.
+
+22
+00:04:33,000 --> 00:04:46,000
+Ansage, Klingelmusik oder stumm
+Assist-Satellit mit seiner konfigurierten Stimme oder Mediaplayer mit eigener TTS-Entität. Sechs Klangoptionen sind enthalten: vier kurze Motivklänge und zwei Musik-Jingles. Speichern spielt keinen Ton ab.
+
+23
+00:04:46,000 --> 00:04:59,000
+Auch ohne offenes Dashboard
+Die Klingel-Audioautomation läuft zentral in Home Assistant. Das Bildschirmbild braucht dagegen ein offenes Display. Bestehende Klingelansagen prüfen, damit nicht zwei Automationen gleichzeitig sprechen. Kamera und Telefonie bleiben eigene HA-Funktionen.
+
+24
+00:04:59,000 --> 00:05:12,000
+Deine eigenen Fotoalben
+Mehrere Bilder, ganze Ordner oder Album-ZIPs importieren. Alben aktivieren und Reihenfolge oder Zufallswiedergabe wählen. Fotos können allein oder im Wechsel mit den Motivwelten laufen.
+
+25
+00:05:12,000 --> 00:05:25,000
+Google Fotos: zwei Wege
+Ohne API: Google Takeout als ZIP oder Ordner importieren. Direkt: eigenes Google-Projekt mit Photos Picker API und OAuth-Client. Die Anleitung erklärt HTTPS-Ursprung, Testnutzer und Fotoauswahl. Keine private Vollalbum-Synchronisation.
+
+26
+00:05:25,000 --> 00:05:38,000
+Wo bleiben deine Bilder?
+Albumimporte liegen im Browserspeicher dieses Displays und HA-Benutzers. Browserdaten löschen entfernt sie. Andere Displays benötigen einen eigenen Import. Google-Tokens werden nur für die laufende Auswahl im Arbeitsspeicher verwendet.
+
+27
+00:05:38,000 --> 00:05:51,000
+Der optionale Assistent
+Edgar, Berta Berlin oder Haunting-Hector auswählen. Pro Figur einen eigenen HA-Assist-Assistenten zuordnen. Stimme und Sprachmodell kommen aus dessen Pipeline. Der gesamte Assistent lässt sich ausschalten.
+
+28
+00:05:51,000 --> 00:06:04,000
+Chat und bewusstes Zuhören
+Der leuchtende Knopf öffnet Gesicht und Chat, ohne den Schoner zu beenden. Tippen oder eine Mikrofonrunde über Zuhören. Die öffentliche Karte bietet keine dauerhafte Mithörsitzung. Sprachausgabe benötigt eine funktionierende Assist-Pipeline.
+
+29
+00:06:04,000 --> 00:06:17,000
+Frei konfigurieren. Weiterentwickeln.
+Die ausführliche README erklärt alle Funktionen und Grenzen. Google-Fotos- und Klingelanleitung liegen separat bei. Updates über HACS bringen neue mitgelieferte Motive; deine lokalen Alben bleiben eigene Browserdaten.
+
+30
+00:06:17,000 --> 00:06:30,000
+Jetzt dein Display gestalten.
+github.com/Heinz-Creator/oled-bildschirmschoner
+
+Installationsanleitung, Funktionen, Konfiguration und Prüfbericht stehen im Repository. Dieser Rundgang zeigt die öffentliche Version mit Beispieldaten und ohne Audioausgabe.

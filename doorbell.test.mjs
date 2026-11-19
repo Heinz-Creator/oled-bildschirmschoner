@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {bellConfiguration,saveBellSetting,BELL_HELPERS} from './src/night-train/doorbell-config.js';
+const states=Object.fromEntries(Object.values(BELL_HELPERS).map(id=>[id,{state:'Ansage',attributes:{options:['Ansage','Theme-Klingelton','Stumm']}}]));
+test('saving a bell preference calls only a helper service and never playback',async()=>{const calls=[],hass={states,callService:async(...args)=>calls.push(args)};await saveBellSetting(hass,'mode','Stumm');assert.deepEqual(calls,[['input_select','select_option',{option:'Stumm'},{entity_id:BELL_HELPERS.mode}]]);await assert.rejects(saveBellSetting(hass,'mode','play_media'));await assert.rejects(saveBellSetting(hass,'unsafe','Stumm'));assert.equal(calls.length,1);});
+test('unconfigured installations hide the private bell settings',()=>{assert.equal(bellConfiguration({states:{}}),null);assert.equal(bellConfiguration({states}).mode.value,'Ansage');});
